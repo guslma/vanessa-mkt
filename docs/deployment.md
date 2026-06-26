@@ -60,15 +60,28 @@ Acessando `https://algumacoisa.duckdns.org` pelo Chrome/Safari:
 
 ## Backup e restauração do banco
 
-Volume persistido em `/DATA/AppData/marketing-tracker/db` (Postgres). Para backup manual:
+Volume persistido em `/DATA/AppData/marketing-tracker/db` (Postgres). Use `deploy/backup-db.sh` para automatizar:
+
 ```sh
-docker exec marketing-tracker-db pg_dump -U marketing marketing > backup_$(date +%Y%m%d).sql
+scp deploy/backup-db.sh zimaos:/DATA/AppData/marketing-tracker/backup-db.sh
+ssh zimaos "chmod +x /DATA/AppData/marketing-tracker/backup-db.sh"
 ```
-Para restaurar em um banco novo:
+
+Agende no ZimaOS via `crontab -e` (todo dia às 3h, mantém os últimos 14 dias):
+```cron
+0 3 * * * /DATA/AppData/marketing-tracker/backup-db.sh /DATA/AppData/marketing-tracker/backups
+```
+
+Backup manual avulso:
 ```sh
-cat backup_20260101.sql | docker exec -i marketing-tracker-db psql -U marketing marketing
+docker exec marketing-tracker-db pg_dump -U marketing marketing | gzip > backup_$(date +%Y%m%d).sql.gz
 ```
-Recomenda-se agendar esse `pg_dump` periodicamente (ex. via cron do próprio ZimaOS) para uma pasta com backup externo (outro disco/cloud), já que o volume local não protege contra falha de disco.
+Para restaurar:
+```sh
+gunzip -c backup_20260101.sql.gz | docker exec -i marketing-tracker-db psql -U marketing marketing
+```
+
+Como o volume local não protege contra falha de disco, copie a pasta de backups periodicamente pra outro lugar (outro disco, nuvem, etc).
 
 ## Anexos de tarefas
 

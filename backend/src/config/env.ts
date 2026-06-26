@@ -38,4 +38,8 @@ export const env = {
   smtpPassword: process.env.SMTP_PASSWORD,
   smtpFrom: process.env.SMTP_FROM ?? 'Marketing Tracker <no-reply@marketing-tracker.local>',
   dailyDigestHour: Number(process.env.DAILY_DIGEST_HOUR ?? 8),
+  // Lista de origens permitidas pro CORS, separadas por vírgula. Vazio/ausente
+  // = libera qualquer origem (ok pra dev local; em produção defina isso pro
+  // domínio real, ex: https://meuapp.duckdns.org).
+  corsOrigins: process.env.CORS_ORIGINS?.split(',').map((o) => o.trim()).filter(Boolean),
 };

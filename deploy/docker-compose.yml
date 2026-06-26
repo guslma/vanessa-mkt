@@ -20,6 +20,7 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SMTP_FROM: ${SMTP_FROM:-Marketing Tracker <no-reply@marketing-tracker.local>}
       DAILY_DIGEST_HOUR: ${DAILY_DIGEST_HOUR:-8}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
     depends_on:
       - db
     ports:
@@ -30,6 +31,7 @@ services:
       - /DATA/AppData/marketing-tracker/uploads:/app/uploads
     x-casaos:
       port_map: "8088"
+      icon: "https://cdn.jsdelivr.net/gh/guslma/vanessa-mkt@v1.0.0/frontend/public/icons/icon-512.png"
 
   db:
     image: postgis/postgis:16-3.4
@@ -45,6 +47,10 @@ services:
 x-casaos:
   architectures: ["amd64", "arm64"]
   main: app
+  icon: "https://cdn.jsdelivr.net/gh/guslma/vanessa-mkt@v1.0.0/frontend/public/icons/icon-512.png"
+  title:
+    en_us: "Vanessa MKT"
+    pt_br: "Vanessa MKT"
   description:
     en_us: "Marketing task tracker for real estate developments"
     pt_br: "Gerenciador de tarefas de marketing para empreendimentos imobiliários"

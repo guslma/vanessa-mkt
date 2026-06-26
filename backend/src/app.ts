@@ -13,6 +13,7 @@ import { publicRouter } from './modules/public/public.routes';
 import { notificationsRouter } from './modules/notifications/notifications.routes';
 import { requireAuth } from './middleware/auth';
 import { errorHandler } from './middleware/errorHandler';
+import { env } from './config/env';
 
 export function createApp() {
   const app = express();
@@ -24,7 +25,9 @@ export function createApp() {
     // X-Content-Type-Options, Referrer-Policy, HSTS) já valem por si.
     contentSecurityPolicy: false,
   }));
-  app.use(cors());
+  app.use(cors({
+    origin: env.corsOrigins && env.corsOrigins.length > 0 ? env.corsOrigins : true,
+  }));
   app.use(express.json());
 
   app.get('/api/health', (_req, res) => res.json({ ok: true }));
