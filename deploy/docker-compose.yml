@@ -1,0 +1,57 @@
+name: marketing-tracker
+services:
+  app:
+    image: ${DOCKERHUB_USER:-changeme}/marketing-tracker:latest
+    container_name: marketing-tracker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://marketing:${DB_PASSWORD}@marketing-tracker-db:5432/marketing
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      MAX_UPLOAD_SIZE_MB: ${MAX_UPLOAD_SIZE_MB:-15}
+      PORT: 3001
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_NAME: ${ADMIN_NAME:-Administradora}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-Marketing Tracker <no-reply@marketing-tracker.local>}
+      DAILY_DIGEST_HOUR: ${DAILY_DIGEST_HOUR:-8}
+    depends_on:
+      - db
+    ports:
+      - target: 3001
+        published: "8088"
+        protocol: tcp
+    volumes:
+      - /DATA/AppData/marketing-tracker/uploads:/app/uploads
+    x-casaos:
+      port_map: "8088"
+
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: marketing-tracker-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: marketing
+      POSTGRES_USER: marketing
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - /DATA/AppData/marketing-tracker/db:/var/lib/postgresql/data
+
+x-casaos:
+  architectures: ["amd64", "arm64"]
+  main: app
+  description:
+    en_us: "Marketing task tracker for real estate developments"
+    pt_br: "Gerenciador de tarefas de marketing para empreendimentos imobiliários"
+  tagline:
+    en_us: "Replace your spreadsheet"
+    pt_br: "Substitua sua planilha"
+  category: "Productivity"
+  port_map: "8088"
+  scheme: "http"
+  store_app_id: "marketing-tracker"
