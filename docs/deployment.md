@@ -42,14 +42,14 @@ export DOCKERHUB_USER=seu-usuario
 
 ## 5. Instalar no ZimaOS
 
-A pasta `deploy/` é autocontida e tem seu próprio passo a passo — veja [`deploy/README.md`](../deploy/README.md). Resumo:
+A pasta `deploy/` é autocontida e tem seu próprio passo a passo — veja [`deploy/README.md`](../deploy/README.md), que cobre dois caminhos: com `docker compose` (usa `.env`) ou só com `casaos-cli` (sem plugin de compose — caminho usado na instalação real deste projeto, onde os valores vão direto no `docker-compose.yml`, sem `.env`, com a permissão do arquivo travada em `600`). Resumo:
 
-1. Copie `deploy/docker-compose.yml` e `deploy/.env.example` para uma pasta no ZimaOS.
-2. Copie `.env.example` para `.env` e preencha `DOCKERHUB_USER`, `DB_PASSWORD`, `JWT_SECRET` (gere algo aleatório longo, ex. `openssl rand -hex 32`), `ADMIN_EMAIL`, `ADMIN_PASSWORD` (a senha inicial dela).
-3. Suba: `docker compose up -d`.
-4. O container `app` roda as migrations e cria o usuário admin automaticamente no primeiro start (via `ADMIN_EMAIL`/`ADMIN_PASSWORD`). Depois disso esses dados ficam só no banco — pode remover as variáveis do `.env` se preferir, ou trocar a senha pela própria tela de Usuários.
+1. Crie as pastas de dados e ajuste a permissão do Postgres (veja `deploy/README.md`).
+2. Configure as variáveis (via `.env` ou direto no compose, dependendo do caminho escolhido): `DOCKERHUB_USER`, `DB_PASSWORD`, `JWT_SECRET` (gere algo aleatório longo, ex. `openssl rand -hex 32`), `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `CORS_ORIGINS` (domínio público real).
+3. Suba via `docker compose up -d` ou `casaos-cli app-management install -f ...`.
+4. O container `app` roda as migrations e cria o usuário admin automaticamente no primeiro start.
 5. Confirme local: `http://<ip-do-zimaos>:8088/api/health` deve responder `{"ok":true}`.
-6. Confirme externo: `https://algumacoisa.duckdns.org/api/health` pelo proxy reverso.
+6. Confirme externo: `https://seudominio.duckdns.org/api/health` pelo proxy reverso.
 
 ## 6. Instalar o PWA no celular/PC dela
 
@@ -97,4 +97,4 @@ Veja `database/migrations` e o script `backend/src/scripts/import-xlsx.ts` para 
 
 ## Atualizações futuras
 
-Para enviar uma nova versão: rode `./scripts/build-and-push.sh <nova-tag>`, atualize a tag no `.env` (ou use `latest` e apenas `docker compose pull && docker compose up -d` no ZimaOS). Veja também `deploy/README.md`.
+Para enviar uma nova versão: rode `./scripts/build-and-push.sh <nova-tag>` e depois `docker compose pull && docker compose up -d` (caminho com compose) ou `docker pull ... && casaos-cli app-management apply marketing-tracker -f ...` (caminho `casaos-cli`). Veja `deploy/README.md` para o comando completo de cada caminho.
