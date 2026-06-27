@@ -11,7 +11,7 @@ set -e
 
 DEST="${1:-/DATA/AppData/marketing-tracker/backups}"
 RETENTION_DAYS=14
-CONTAINER="marketing-tracker-db"
+CONTAINER="marketing-tracker-postgres"
 DB_USER="marketing"
 DB_NAME="marketing"
 

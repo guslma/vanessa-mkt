@@ -42,12 +42,12 @@ export DOCKERHUB_USER=seu-usuario
 
 ## 5. Instalar no ZimaOS
 
-A pasta `deploy/` é autocontida e tem seu próprio passo a passo — veja [`deploy/README.md`](../deploy/README.md), que cobre dois caminhos: com `docker compose` (usa `.env`) ou só com `casaos-cli` (sem plugin de compose — caminho usado na instalação real deste projeto, onde os valores vão direto no `docker-compose.yml`, sem `.env`, com a permissão do arquivo travada em `600`). Resumo:
+A pasta `deploy/` é autocontida e tem seu próprio passo a passo — veja [`deploy/README.md`](../deploy/README.md). Não usa `.env`: os valores ficam direto no `deploy/docker-compose.yml` (formato que o CasaOS/ZimaOS espera, tanto colando na interface quanto via `casaos-cli`). Resumo:
 
 1. Crie as pastas de dados e ajuste a permissão do Postgres (veja `deploy/README.md`).
-2. Configure as variáveis (via `.env` ou direto no compose, dependendo do caminho escolhido): `DOCKERHUB_USER`, `DB_PASSWORD`, `JWT_SECRET` (gere algo aleatório longo, ex. `openssl rand -hex 32`), `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `CORS_ORIGINS` (domínio público real).
+2. Edite o `deploy/docker-compose.yml` trocando os placeholders `CHANGE_ME_...`: senha do banco, `JWT_SECRET` (gere algo aleatório longo, ex. `openssl rand -hex 32`), `ADMIN_EMAIL`/senha admin, e `CORS_ORIGINS` (domínio público real). Trave a permissão com `chmod 600` depois.
 3. Suba via `docker compose up -d` ou `casaos-cli app-management install -f ...`.
-4. O container `app` roda as migrations e cria o usuário admin automaticamente no primeiro start.
+4. O container `marketing-tracker` roda as migrations e cria o usuário admin automaticamente no primeiro start.
 5. Confirme local: `http://<ip-do-zimaos>:8088/api/health` deve responder `{"ok":true}`.
 6. Confirme externo: `https://seudominio.duckdns.org/api/health` pelo proxy reverso.
 
@@ -60,7 +60,7 @@ Acessando `https://algumacoisa.duckdns.org` pelo Chrome/Safari:
 
 ## Backup e restauração do banco
 
-Volume persistido em `/DATA/AppData/marketing-tracker/db` (Postgres). Use `deploy/backup-db.sh` para automatizar:
+Volume persistido em `/DATA/AppData/marketing-tracker/postgres` (Postgres). Use `deploy/backup-db.sh` para automatizar:
 
 ```sh
 scp deploy/backup-db.sh zimaos:/DATA/AppData/marketing-tracker/backup-db.sh
@@ -74,18 +74,18 @@ Agende no ZimaOS via `crontab -e` (todo dia às 3h, mantém os últimos 14 dias)
 
 Backup manual avulso:
 ```sh
-docker exec marketing-tracker-db pg_dump -U marketing marketing | gzip > backup_$(date +%Y%m%d).sql.gz
+docker exec marketing-tracker-postgres pg_dump -U marketing marketing | gzip > backup_$(date +%Y%m%d).sql.gz
 ```
 Para restaurar:
 ```sh
-gunzip -c backup_20260101.sql.gz | docker exec -i marketing-tracker-db psql -U marketing marketing
+gunzip -c backup_20260101.sql.gz | docker exec -i marketing-tracker-postgres psql -U marketing marketing
 ```
 
 Como o volume local não protege contra falha de disco, copie a pasta de backups periodicamente pra outro lugar (outro disco, nuvem, etc).
 
 ## Anexos de tarefas
 
-Os arquivos enviados pela tela de tarefas ficam em `/DATA/AppData/marketing-tracker/uploads` (volume do container `app`), separado do volume do banco — inclua essa pasta no seu backup também.
+Os arquivos enviados pela tela de tarefas ficam em `/DATA/AppData/marketing-tracker/uploads` (volume do container `marketing-tracker`), separado do volume do banco — inclua essa pasta no seu backup também.
 
 ## Importar os dados reais da planilha
 

@@ -1,63 +1,74 @@
 name: marketing-tracker
 services:
-  app:
-    image: ${DOCKERHUB_USER:-changeme}/marketing-tracker:latest
+  marketing-tracker:
     container_name: marketing-tracker
-    restart: unless-stopped
-    environment:
-      DATABASE_URL: postgres://marketing:${DB_PASSWORD}@marketing-tracker-db:5432/marketing
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
-      MAX_UPLOAD_SIZE_MB: ${MAX_UPLOAD_SIZE_MB:-15}
-      PORT: 3001
-      ADMIN_EMAIL: ${ADMIN_EMAIL}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-      ADMIN_NAME: ${ADMIN_NAME:-Administradora}
-      SMTP_HOST: ${SMTP_HOST:-}
-      SMTP_PORT: ${SMTP_PORT:-587}
-      SMTP_SECURE: ${SMTP_SECURE:-false}
-      SMTP_USER: ${SMTP_USER:-}
-      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
-      SMTP_FROM: ${SMTP_FROM:-Marketing Tracker <no-reply@marketing-tracker.local>}
-      DAILY_DIGEST_HOUR: ${DAILY_DIGEST_HOUR:-8}
-      CORS_ORIGINS: ${CORS_ORIGINS:-}
-    depends_on:
-      - db
+    image: guslma/marketing-tracker:latest
     ports:
       - target: 3001
         published: "8088"
         protocol: tcp
+    environment:
+      DATABASE_URL: postgresql://marketing:CHANGE_ME_DB_PASSWORD@postgres:5432/marketing
+      JWT_SECRET: CHANGE_ME_JWT_SECRET_BEM_LONGO_E_ALEATORIO
+      JWT_EXPIRES_IN: 7d
+      MAX_UPLOAD_SIZE_MB: 15
+      PORT: 3001
+      ADMIN_EMAIL: esposa@example.com
+      ADMIN_PASSWORD: CHANGE_ME_ADMIN_PASSWORD
+      ADMIN_NAME: Administradora
+      # SMTP é opcional — deixe em branco para desativar o resumo diário por e-mail.
+      SMTP_HOST: ""
+      SMTP_PORT: 587
+      SMTP_SECURE: "false"
+      SMTP_USER: ""
+      SMTP_PASSWORD: ""
+      SMTP_FROM: "Marketing Tracker <no-reply@marketing-tracker.local>"
+      DAILY_DIGEST_HOUR: 8
+      # Domínio público real do app, para restringir o CORS (ex: https://meuapp.duckdns.org).
+      CORS_ORIGINS: ""
     volumes:
-      - /DATA/AppData/marketing-tracker/uploads:/app/uploads
-    x-casaos:
-      port_map: "8088"
+      - type: bind
+        source: /DATA/AppData/marketing-tracker/uploads
+        target: /app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    labels:
       icon: "https://cdn.jsdelivr.net/gh/guslma/vanessa-mkt@v1.0.0/frontend/public/icons/icon-512.png"
 
-  db:
+  postgres:
+    container_name: marketing-tracker-postgres
     image: postgis/postgis:16-3.4
-    container_name: marketing-tracker-db
-    restart: unless-stopped
     environment:
-      POSTGRES_DB: marketing
       POSTGRES_USER: marketing
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PASSWORD: CHANGE_ME_DB_PASSWORD
+      POSTGRES_DB: marketing
     volumes:
-      - /DATA/AppData/marketing-tracker/db:/var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/marketing-tracker/postgres
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marketing"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+networks:
+  default:
+    name: marketing-tracker_default
 
 x-casaos:
-  architectures: ["amd64", "arm64"]
-  main: app
+  author: self
+  category: self
+  hostname: ""
   icon: "https://cdn.jsdelivr.net/gh/guslma/vanessa-mkt@v1.0.0/frontend/public/icons/icon-512.png"
-  title:
-    en_us: "Vanessa MKT"
-    pt_br: "Vanessa MKT"
-  description:
-    en_us: "Marketing task tracker for real estate developments"
-    pt_br: "Gerenciador de tarefas de marketing para empreendimentos imobiliários"
-  tagline:
-    en_us: "Replace your spreadsheet"
-    pt_br: "Substitua sua planilha"
-  category: "Productivity"
+  index: /
+  is_uncontrolled: false
   port_map: "8088"
-  scheme: "http"
-  store_app_id: "marketing-tracker"
+  scheme: http
+  store_app_id: marketing-tracker
+  title:
+    custom: ""
+    en_us: Vanessa MKT
