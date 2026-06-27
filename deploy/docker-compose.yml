@@ -1,4 +1,5 @@
 name: marketing-tracker
+
 services:
   marketing-tracker:
     container_name: marketing-tracker
@@ -8,15 +9,14 @@ services:
         published: "3001"
         protocol: tcp
     environment:
-      DATABASE_URL: postgresql://marketing:CHANGE_ME_DB_PASSWORD@postgres:5432/marketing
-      JWT_SECRET: CHANGE_ME_JWT_SECRET_BEM_LONGO_E_ALEATORIO
+      DATABASE_URL: postgresql://marketing:SUA_SENHA_AQUI@postgres:5432/marketing
+      JWT_SECRET: SEU_SEGREDO_BEM_LONGO
       JWT_EXPIRES_IN: 7d
       MAX_UPLOAD_SIZE_MB: 15
       PORT: 3001
       ADMIN_EMAIL: esposa@example.com
-      ADMIN_PASSWORD: CHANGE_ME_ADMIN_PASSWORD
+      ADMIN_PASSWORD: SUA_SENHA_ADMIN
       ADMIN_NAME: Administradora
-      # SMTP é opcional — deixe em branco para desativar o resumo diário por e-mail.
       SMTP_HOST: ""
       SMTP_PORT: 587
       SMTP_SECURE: "false"
@@ -24,15 +24,14 @@ services:
       SMTP_PASSWORD: ""
       SMTP_FROM: "Marketing Tracker <no-reply@marketing-tracker.local>"
       DAILY_DIGEST_HOUR: 8
-      # Domínio público real do app, para restringir o CORS (ex: https://meuapp.duckdns.org).
       CORS_ORIGINS: ""
     volumes:
-      - type: bind
-        source: /DATA/AppData/marketing-tracker/uploads
-        target: /app/uploads
+      - /DATA/AppData/marketing-tracker/uploads:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - marketing-net
     restart: unless-stopped
     labels:
       icon: "https://cdn.jsdelivr.net/gh/guslma/vanessa-mkt@v1.0.0/frontend/public/icons/icon-512.png"
@@ -42,21 +41,24 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: marketing
-      POSTGRES_PASSWORD: CHANGE_ME_DB_PASSWORD
+      POSTGRES_PASSWORD: SUA_SENHA_AQUI
       POSTGRES_DB: marketing
     volumes:
-      - type: bind
-        source: /DATA/AppData/marketing-tracker/postgres
-        target: /var/lib/postgresql/data
+      - /DATA/AppData/marketing-tracker/postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U marketing"]
+      test: ["CMD-SHELL", "pg_isready -U marketing -d marketing"]
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 10s
+    networks:
+      marketing-net:
+        aliases:
+          - postgres
     restart: unless-stopped
 
 networks:
-  default:
+  marketing-net:
     name: marketing-tracker_default
 
 x-casaos:
