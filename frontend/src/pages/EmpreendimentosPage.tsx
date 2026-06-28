@@ -6,6 +6,7 @@ import { EmpreendimentosTable } from '../components/empreendimentos/Empreendimen
 import { EmpreendimentoFormModal } from '../components/empreendimentos/EmpreendimentoFormModal';
 import { ConfirmDialog } from '../components/common/ConfirmDialog';
 import { QueryError } from '../components/common/QueryError';
+import { ImportButton } from '../components/common/ImportButton';
 import { Empreendimento, EmpreendimentoInput } from '../api/empreendimentos';
 
 export function EmpreendimentosPage() {
@@ -35,6 +36,7 @@ export function EmpreendimentosPage() {
           <Link to="/mapa" className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700/60">
             <MapPin size={14} /> Ver mapa
           </Link>
+          <ImportButton />
           <button onClick={() => { setEditing(null); setModalOpen(true); }} className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700">
             + Novo empreendimento
           </button>

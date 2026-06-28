@@ -11,6 +11,7 @@ import { anexosRouter } from './modules/anexos/anexos.routes';
 import { comentariosRouter } from './modules/comentarios/comentarios.routes';
 import { publicRouter } from './modules/public/public.routes';
 import { notificationsRouter } from './modules/notifications/notifications.routes';
+import { importacaoRouter } from './modules/importacao/importacao.routes';
 import { requireAuth } from './middleware/auth';
 import { errorHandler } from './middleware/errorHandler';
 import { env } from './config/env';
@@ -41,6 +42,7 @@ export function createApp() {
   app.use('/api/comentarios', requireAuth, comentariosRouter);
   app.use('/api/public', publicRouter);
   app.use('/api/notifications', requireAuth, notificationsRouter);
+  app.use('/api/importacao', requireAuth, importacaoRouter);
 
   const frontendDist = path.join(__dirname, '..', 'public');
   app.use(express.static(frontendDist));
