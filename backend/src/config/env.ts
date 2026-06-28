@@ -31,13 +31,10 @@ export const env = {
   adminName: process.env.ADMIN_NAME ?? 'Administrador',
   uploadsDir: process.env.UPLOADS_DIR ?? path.resolve(process.cwd(), 'uploads'),
   maxUploadSizeMb: Number(process.env.MAX_UPLOAD_SIZE_MB ?? 15),
-  smtpHost: process.env.SMTP_HOST,
-  smtpPort: Number(process.env.SMTP_PORT ?? 587),
-  smtpSecure: process.env.SMTP_SECURE === 'true',
-  smtpUser: process.env.SMTP_USER,
-  smtpPassword: process.env.SMTP_PASSWORD,
-  smtpFrom: process.env.SMTP_FROM ?? 'Marketing Tracker <no-reply@marketing-tracker.local>',
   dailyDigestHour: Number(process.env.DAILY_DIGEST_HOUR ?? 8),
+  vapidPublicKey: process.env.VAPID_PUBLIC_KEY,
+  vapidPrivateKey: process.env.VAPID_PRIVATE_KEY,
+  vapidSubject: process.env.VAPID_SUBJECT ?? 'mailto:no-reply@marketing-tracker.local',
   // Lista de origens permitidas pro CORS, separadas por vírgula. Vazio/ausente
   // = libera qualquer origem (ok pra dev local; em produção defina isso pro
   // domínio real, ex: https://meuapp.duckdns.org).

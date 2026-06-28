@@ -14,9 +14,9 @@ async function tick() {
     lastSentDateKey = key;
     try {
       const result = await sendDailyDigest();
-      console.log('Resumo diário por e-mail:', result);
+      console.log('Resumo diário por push:', result);
     } catch (err) {
-      console.error('Erro ao enviar resumo diário por e-mail:', err);
+      console.error('Erro ao enviar resumo diário por push:', err);
     }
   }
 }

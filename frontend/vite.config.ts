@@ -7,6 +7,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
       includeAssets: ['icons/*.png'],
       manifest: {
         name: 'Vanessa MKT',
@@ -20,20 +23,6 @@ export default defineConfig({
           { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
           { src: '/icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
-        ],
-      },
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: /\/api\//,
-            handler: 'NetworkFirst',
-            options: { cacheName: 'api-cache', networkTimeoutSeconds: 5 },
-          },
-          {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|woff2?)$/,
-            handler: 'CacheFirst',
-            options: { cacheName: 'assets-cache' },
-          },
         ],
       },
     }),
