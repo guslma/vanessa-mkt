@@ -3,14 +3,15 @@ import { apiFetch } from './client';
 export interface User {
   id: string;
   name: string;
+  username: string;
   email: string;
   role: 'admin' | 'member';
 }
 
-export function login(email: string, password: string) {
+export function login(username: string, password: string) {
   return apiFetch<{ token: string; user: User }>('/auth/login', {
     method: 'POST',
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ username, password }),
   });
 }
 

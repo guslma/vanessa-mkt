@@ -5,7 +5,7 @@ import { clearToken, getToken, setToken } from '../api/client';
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -26,8 +26,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => setLoading(false));
   }, []);
 
-  async function login(email: string, password: string) {
-    const { token, user } = await apiLogin(email, password);
+  async function login(username: string, password: string) {
+    const { token, user } = await apiLogin(username, password);
     setToken(token);
     setUser(user);
   }

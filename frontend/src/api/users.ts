@@ -2,6 +2,7 @@ import { apiFetch } from './client';
 
 export interface AppUser {
   id: string;
+  username: string;
   email: string;
   name: string;
   role: 'admin' | 'member';
@@ -11,6 +12,7 @@ export interface AppUser {
 }
 
 export interface CreateUserInput {
+  username: string;
   email: string;
   name: string;
   password: string;

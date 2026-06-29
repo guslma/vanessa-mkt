@@ -8,6 +8,7 @@ const FUNCAO_VALUES = [
 ] as const;
 
 const createSchema = z.object({
+  username: z.string().trim().min(3).max(50).regex(/^[a-zA-Z0-9._-]+$/, 'Use apenas letras, números, ponto, hífen ou underline'),
   email: z.string().email(),
   name: z.string().min(1),
   password: z.string().min(6),

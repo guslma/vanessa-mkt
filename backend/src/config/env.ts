@@ -26,6 +26,7 @@ export const env = {
   jwtSecret: required('JWT_SECRET'),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? '7d',
   port: Number(process.env.PORT ?? 3001),
+  adminUsername: process.env.ADMIN_USERNAME ?? process.env.ADMIN_EMAIL?.split('@')[0],
   adminEmail: process.env.ADMIN_EMAIL,
   adminPassword: process.env.ADMIN_PASSWORD,
   adminName: process.env.ADMIN_NAME ?? 'Administrador',

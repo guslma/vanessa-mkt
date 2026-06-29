@@ -21,7 +21,7 @@ export function UsersPage() {
   function handleSubmit(input: CreateUserInput) {
     const onSuccess = () => setModalOpen(false);
     if (editing) {
-      const { email, ...patch } = input;
+      const { email, username, ...patch } = input;
       const cleanPatch = patch.password ? patch : { name: patch.name, role: patch.role, funcao: patch.funcao };
       update.mutate({ id: editing.id, input: cleanPatch }, { onSuccess });
     } else {
@@ -50,7 +50,7 @@ export function UsersPage() {
             <div key={u.id} className="flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3">
               <div>
                 <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{u.name} {!u.active && <span className="text-xs text-slate-400 dark:text-slate-500">(inativo)</span>}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{u.email}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">@{u.username} · {u.email}</p>
               </div>
               <div className="flex items-center gap-2">
                 {u.funcao && <Badge label={USER_FUNCAO_LABELS[u.funcao] ?? u.funcao} colorClass="bg-slate-100 text-slate-600 dark:text-slate-300" />}

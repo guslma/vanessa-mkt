@@ -12,14 +12,18 @@ interface UserFormModalProps {
   saving: boolean;
 }
 
-const EMPTY: CreateUserInput = { email: '', name: '', password: '', role: 'member', funcao: null };
+const EMPTY: CreateUserInput = { username: '', email: '', name: '', password: '', role: 'member', funcao: null };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const USERNAME_RE = /^[a-zA-Z0-9._-]+$/;
 
-type Errors = Partial<Record<'name' | 'email' | 'password', string>>;
+type Errors = Partial<Record<'name' | 'username' | 'email' | 'password', string>>;
 
 function validate(form: CreateUserInput, isEditing: boolean): Errors {
   const errors: Errors = {};
   if (!form.name.trim()) errors.name = 'Informe o nome';
+  if (!form.username.trim()) errors.username = 'Informe o usuário';
+  else if (form.username.trim().length < 3) errors.username = 'Use ao menos 3 caracteres';
+  else if (!USERNAME_RE.test(form.username.trim())) errors.username = 'Use apenas letras, números, ponto, hífen ou underline';
   if (!form.email.trim()) errors.email = 'Informe o e-mail';
   else if (!EMAIL_RE.test(form.email)) errors.email = 'E-mail inválido';
   if (!isEditing && form.password.length < 6) errors.password = 'Use ao menos 6 caracteres';
@@ -34,7 +38,7 @@ export function UserFormModal({ open, user, onClose, onSubmit, saving }: UserFor
   useEffect(() => {
     setErrors({});
     if (user) {
-      setForm({ email: user.email, name: user.name, role: user.role, funcao: user.funcao, password: '' });
+      setForm({ username: user.username, email: user.email, name: user.name, role: user.role, funcao: user.funcao, password: '' });
     } else {
       setForm(EMPTY);
     }
@@ -58,8 +62,12 @@ export function UserFormModal({ open, user, onClose, onSubmit, saving }: UserFor
         <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass(!!errors.name)} />
         <FieldError message={errors.name} />
 
+        <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">Usuário (login)</label>
+        <input type="text" autoCapitalize="none" autoCorrect="off" disabled={!!user} value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} className={`${inputClass(!!errors.username)} disabled:bg-slate-100 disabled:text-slate-400 dark:text-slate-500`} />
+        <FieldError message={errors.username} />
+
         <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">E-mail</label>
-        <input type="email" disabled={!!user} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={`${inputClass(!!errors.email)} disabled:bg-slate-100 disabled:text-slate-400 dark:text-slate-500`} />
+        <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputClass(!!errors.email)} />
         <FieldError message={errors.email} />
 
         <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">Papel</label>

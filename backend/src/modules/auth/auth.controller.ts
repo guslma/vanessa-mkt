@@ -4,13 +4,13 @@ import * as authService from './auth.service';
 import { HttpError } from '../../middleware/errorHandler';
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  username: z.string().min(1),
   password: z.string().min(1),
 });
 
 export async function loginHandler(req: Request, res: Response) {
-  const { email, password } = loginSchema.parse(req.body);
-  const result = await authService.login(email, password);
+  const { username, password } = loginSchema.parse(req.body);
+  const result = await authService.login(username, password);
   res.json(result);
 }
 

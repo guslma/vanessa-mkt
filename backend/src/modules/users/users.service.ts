@@ -3,6 +3,7 @@ import { pool } from '../../db/pool';
 import { HttpError } from '../../middleware/errorHandler';
 
 export interface CreateUserInput {
+  username: string;
   email: string;
   name: string;
   password: string;
@@ -20,7 +21,7 @@ export interface UpdateUserInput {
 
 export async function listUsers() {
   const { rows } = await pool.query(
-    'SELECT id, email, name, role, funcao, active, created_at FROM users ORDER BY name',
+    'SELECT id, username, email, name, role, funcao, active, created_at FROM users ORDER BY name',
   );
   return rows;
 }
@@ -29,15 +30,15 @@ export async function createUser(input: CreateUserInput) {
   const passwordHash = await bcrypt.hash(input.password, 12);
   try {
     const { rows } = await pool.query(
-      `INSERT INTO users (email, name, password_hash, role, funcao)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING id, email, name, role, funcao, active, created_at`,
-      [input.email.toLowerCase(), input.name, passwordHash, input.role, input.funcao ?? null],
+      `INSERT INTO users (username, email, name, password_hash, role, funcao)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id, username, email, name, role, funcao, active, created_at`,
+      [input.username.toLowerCase(), input.email.toLowerCase(), input.name, passwordHash, input.role, input.funcao ?? null],
     );
     return rows[0];
   } catch (err: any) {
     if (err.code === '23505') {
-      throw new HttpError(409, 'Já existe um usuário com este e-mail');
+      throw new HttpError(409, 'Já existe um usuário com este nome de usuário ou e-mail');
     }
     throw err;
   }
@@ -77,7 +78,7 @@ export async function updateUser(id: string, input: UpdateUserInput) {
   values.push(id);
   const { rows } = await pool.query(
     `UPDATE users SET ${fields.join(', ')} WHERE id = $${i}
-     RETURNING id, email, name, role, funcao, active, created_at`,
+     RETURNING id, username, email, name, role, funcao, active, created_at`,
     values,
   );
   if (!rows[0]) {

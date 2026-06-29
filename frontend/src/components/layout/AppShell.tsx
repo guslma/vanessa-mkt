@@ -68,7 +68,7 @@ export function AppShell() {
         </div>
       </aside>
 
-      <header className="sticky top-0 z-10 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800 md:hidden">
+      <header className="sticky top-0 z-10 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] dark:border-slate-700 dark:bg-slate-800 md:hidden">
         <div className="flex items-center gap-2.5">
           <img src="/icons/MKT.png" alt="Vanessa MKT" className="h-9 w-auto" />
           <div>
