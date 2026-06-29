@@ -34,21 +34,6 @@ services:
     labels:
       icon: "https://cdn.jsdelivr.net/gh/guslma/vanessa-mkt@v1.0.0/frontend/public/icons/icon-512.png"
 
-  cloudflared:
-    container_name: marketing-tracker-cloudflared
-    image: cloudflare/cloudflared:latest
-    command:
-      - tunnel
-      - --no-autoupdate
-      - run
-    environment:
-      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
-    depends_on:
-      - marketing-tracker
-    networks:
-      - marketing-net
-    restart: unless-stopped
-
   postgres:
     container_name: marketing-tracker-postgres
     image: postgis/postgis:16-3.4
