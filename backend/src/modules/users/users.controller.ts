@@ -3,7 +3,7 @@ import { z } from 'zod';
 import * as usersService from './users.service';
 
 const FUNCAO_VALUES = [
-  'gerente_marketing', 'social_media', 'designer', 'trafego_pago', 'copywriter',
+  'gerente_marketing', 'coordenador_marketing', 'social_media', 'designer', 'trafego_pago', 'copywriter',
   'video_fotografia', 'atendimento', 'comercial', 'agencia', 'outro',
 ] as const;
 

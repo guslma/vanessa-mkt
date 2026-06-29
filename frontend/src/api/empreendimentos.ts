@@ -11,13 +11,11 @@ export interface Empreendimento {
   observacoes: string | null;
   endereco: string | null;
   public_token: string;
-  latitude: number | null;
-  longitude: number | null;
   created_at: string;
   updated_at: string;
 }
 
-export type EmpreendimentoInput = Omit<Empreendimento, 'id' | 'public_token' | 'latitude' | 'longitude' | 'created_at' | 'updated_at'>;
+export type EmpreendimentoInput = Omit<Empreendimento, 'id' | 'public_token' | 'created_at' | 'updated_at'>;
 
 export function listEmpreendimentos() {
   return apiFetch<{ empreendimentos: Empreendimento[] }>('/empreendimentos');

@@ -20,10 +20,10 @@ export function createApp() {
   const app = express();
 
   app.use(helmet({
-    // CSP desligada por padrão: o frontend carrega fontes do Google Fonts e
-    // tiles do OpenStreetMap (mapa), e configurar a política certa exige
-    // testar no navegador. Os outros headers do helmet (X-Frame-Options,
-    // X-Content-Type-Options, Referrer-Policy, HSTS) já valem por si.
+    // CSP desligada por padrão: o frontend carrega fontes do Google Fonts,
+    // e configurar a política certa exige testar no navegador. Os outros
+    // headers do helmet (X-Frame-Options, X-Content-Type-Options,
+    // Referrer-Policy, HSTS) já valem por si.
     contentSecurityPolicy: false,
   }));
   app.use(cors({

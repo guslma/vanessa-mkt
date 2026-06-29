@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MapPin } from 'lucide-react';
 import { useEmpreendimentoMutations, useEmpreendimentos } from '../hooks/useEmpreendimentos';
 import { EmpreendimentosTable } from '../components/empreendimentos/EmpreendimentosTable';
 import { EmpreendimentoFormModal } from '../components/empreendimentos/EmpreendimentoFormModal';
@@ -33,9 +31,6 @@ export function EmpreendimentosPage() {
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Empreendimentos</h1>
         <div className="flex flex-wrap items-center gap-2">
-          <Link to="/mapa" className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700/60">
-            <MapPin size={14} /> Ver mapa
-          </Link>
           <ImportButton />
           <button onClick={() => { setEditing(null); setModalOpen(true); }} className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700">
             + Novo empreendimento

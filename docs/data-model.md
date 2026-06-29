@@ -6,16 +6,15 @@
 users                    empreendimentos                  tarefas
 -----                    ---------------                  -------
 id (uuid, PK)            id (uuid, PK)                    id (uuid, PK)
-email (unique)           nome                              empreendimento_id (FK -> empreendimentos.id)
-password_hash            tipo (enum)                       categoria (enum)
-name                      fase_atual (enum)                 titulo
-role (admin|member)       data_lancamento                   responsavel (texto livre)
-active                    responsavel_comercial             prioridade (enum)
-created_at/updated_at     link_materiais                    status (enum)
-                          observacoes                       data_inicio / prazo / data_conclusao
+username (unique)        nome                              empreendimento_id (FK -> empreendimentos.id)
+email (unique)           tipo (enum)                       categoria (enum)
+password_hash            fase_atual (enum)                 titulo
+name                      data_lancamento                   responsavel (texto livre)
+role (admin|member)       responsavel_comercial             prioridade (enum)
+active                    link_materiais                    status (enum)
+created_at/updated_at     observacoes                       data_inicio / prazo / data_conclusao
                           endereco                           observacoes
-                          location (geography Point, 4326)  created_at/updated_at
-                          created_at/updated_at
+                          created_at/updated_at             created_at/updated_at
 
                                                               + view "tarefas_view" = tarefas + atrasado (bool, calculado)
 ```
@@ -34,8 +33,7 @@ created_at/updated_at     link_materiais                    status (enum)
 | responsavel_comercial | text | nullable |
 | link_materiais | text | URL para pasta/Drive de materiais |
 | observacoes | text | nullable |
-| endereco | text | nullable — não existe na planilha hoje; preparação para geocoding futuro |
-| location | geography(Point,4326) | nullable — populada apenas se/quando um endereço for geocodificado; índice GIST |
+| endereco | text | nullable — armazenado apenas para referência/exibição |
 
 ### `tarefas`
 | Campo | Tipo | Observação |

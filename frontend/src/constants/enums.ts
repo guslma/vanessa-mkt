@@ -61,6 +61,7 @@ export const TAREFA_RECORRENCIA_LABELS: Record<string, string> = {
 
 export const USER_FUNCAO_LABELS: Record<string, string> = {
   gerente_marketing: 'Gerente de Marketing',
+  coordenador_marketing: 'Coordenador de Marketing',
   social_media: 'Social Media',
   designer: 'Designer',
   trafego_pago: 'Tráfego Pago',

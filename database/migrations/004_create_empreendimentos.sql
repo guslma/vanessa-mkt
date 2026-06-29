@@ -8,10 +8,8 @@ CREATE TABLE empreendimentos (
   link_materiais        text,
   observacoes           text,
   endereco              text,
-  location              geography(Point, 4326),
   created_at            timestamptz NOT NULL DEFAULT now(),
   updated_at            timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_empreendimentos_location ON empreendimentos USING GIST (location);
 CREATE INDEX idx_empreendimentos_fase ON empreendimentos (fase_atual);

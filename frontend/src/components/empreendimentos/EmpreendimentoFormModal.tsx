@@ -48,7 +48,7 @@ export function EmpreendimentoFormModal({ open, empreendimento, onClose, onSubmi
   useEffect(() => {
     setErrors({});
     if (empreendimento) {
-      const { id, latitude, longitude, created_at, updated_at, ...rest } = empreendimento as any;
+      const { id, created_at, updated_at, ...rest } = empreendimento as any;
       setForm({ ...rest, data_lancamento: toDateOnly(rest.data_lancamento) || null });
     } else {
       setForm(EMPTY);
@@ -103,7 +103,6 @@ export function EmpreendimentoFormModal({ open, empreendimento, onClose, onSubmi
           className={inputClass()}
           placeholder="Rua, número, bairro, cidade"
         />
-        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Opcional — preenchendo, o empreendimento aparece automaticamente no mapa.</p>
 
         <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">Link / Pasta de Materiais</label>
         <input value={form.link_materiais ?? ''} onChange={(e) => setForm({ ...form, link_materiais: e.target.value })} className={inputClass(!!errors.link_materiais)} placeholder="https://..." />
