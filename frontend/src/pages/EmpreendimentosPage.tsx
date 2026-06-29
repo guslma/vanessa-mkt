@@ -29,7 +29,7 @@ export function EmpreendimentosPage() {
   return (
     <div>
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Empreendimentos</h1>
+        <h1 className="text-xl font-semibold text-slate-800">Empreendimentos</h1>
         <div className="flex flex-wrap items-center gap-2">
           <ImportButton />
           <button onClick={() => { setEditing(null); setModalOpen(true); }} className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700">
@@ -41,7 +41,7 @@ export function EmpreendimentosPage() {
       {isError ? (
         <QueryError error={error} onRetry={refetch} />
       ) : isLoading ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">Carregando...</p>
+        <p className="text-sm text-slate-500">Carregando...</p>
       ) : (
         <EmpreendimentosTable
           empreendimentos={empreendimentos}

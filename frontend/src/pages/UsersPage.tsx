@@ -32,7 +32,7 @@ export function UsersPage() {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Usuários</h1>
+        <h1 className="text-xl font-semibold text-slate-800">Usuários</h1>
         <button onClick={() => { setEditing(null); setModalOpen(true); }} className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700">
           + Novo usuário
         </button>
@@ -43,22 +43,22 @@ export function UsersPage() {
       {isError ? (
         <QueryError error={error} onRetry={refetch} />
       ) : isLoading ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">Carregando...</p>
+        <p className="text-sm text-slate-500">Carregando...</p>
       ) : (
         <div className="flex flex-col gap-2">
           {users.map((u) => (
-            <div key={u.id} className="flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3">
+            <div key={u.id} className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-3">
               <div>
-                <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{u.name} {!u.active && <span className="text-xs text-slate-400 dark:text-slate-500">(inativo)</span>}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">@{u.username} · {u.email}</p>
+                <p className="text-sm font-semibold text-slate-800">{u.name} {!u.active && <span className="text-xs text-slate-400">(inativo)</span>}</p>
+                <p className="text-xs text-slate-500">@{u.username} · {u.email}</p>
               </div>
               <div className="flex items-center gap-2">
-                {u.funcao && <Badge label={USER_FUNCAO_LABELS[u.funcao] ?? u.funcao} colorClass="bg-slate-100 text-slate-600 dark:text-slate-300" />}
-                <Badge label={u.role === 'admin' ? 'Administrador' : 'Equipe / Agência'} colorClass={u.role === 'admin' ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700 dark:text-slate-200'} />
-                <button onClick={() => { setEditing(u); setModalOpen(true); }} className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-100">Editar</button>
+                {u.funcao && <Badge label={USER_FUNCAO_LABELS[u.funcao] ?? u.funcao} colorClass="bg-slate-100 text-slate-600" />}
+                <Badge label={u.role === 'admin' ? 'Administrador' : 'Equipe / Agência'} colorClass={u.role === 'admin' ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700'} />
+                <button onClick={() => { setEditing(u); setModalOpen(true); }} className="text-xs text-slate-500 hover:text-slate-800">Editar</button>
                 <button
                   onClick={() => update.mutate({ id: u.id, input: { active: !u.active } })}
-                  className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-100"
+                  className="text-xs text-slate-500 hover:text-slate-800"
                 >
                   {u.active ? 'Desativar' : 'Ativar'}
                 </button>
@@ -66,7 +66,7 @@ export function UsersPage() {
               </div>
             </div>
           ))}
-          {users.length === 0 && <p className="text-sm text-slate-400 dark:text-slate-500">Nenhum usuário cadastrado.</p>}
+          {users.length === 0 && <p className="text-sm text-slate-400">Nenhum usuário cadastrado.</p>}
         </div>
       )}
 

@@ -1,7 +1,6 @@
-import { LayoutDashboard, KanbanSquare, ListChecks, CalendarDays, Building2, Users, LogOut, Moon, Sun } from 'lucide-react';
+import { LayoutDashboard, KanbanSquare, ListChecks, CalendarDays, Building2, Users, LogOut } from 'lucide-react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Resumo', Icon: LayoutDashboard },
@@ -22,22 +21,13 @@ const TODAY_LABEL = new Intl.DateTimeFormat('pt-BR', {
   weekday: 'long', day: '2-digit', month: 'long',
 }).format(new Date());
 
-function ThemeToggle({ className }: { className?: string }) {
-  const { theme, toggleTheme } = useTheme();
-  return (
-    <button onClick={toggleTheme} title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'} className={className}>
-      {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-    </button>
-  );
-}
-
 export function AppShell() {
   const { user, logout } = useAuth();
   const navItems = user?.role === 'admin' ? [...NAV_ITEMS, { to: '/usuarios', label: 'Usuários', Icon: Users }] : NAV_ITEMS;
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden bg-slate-50 dark:bg-slate-900 md:flex-row">
-      <aside className="hidden md:flex md:w-60 md:flex-col md:border-r md:border-slate-200 md:bg-white dark:md:border-slate-700 dark:md:bg-slate-800">
+    <div className="flex h-dvh flex-col overflow-hidden bg-slate-50 md:flex-row">
+      <aside className="hidden md:flex md:w-60 md:flex-col md:border-r md:border-slate-200 md:bg-white">
         <div className="flex items-center justify-center px-3 py-4">
           <img src="/icons/MKT.png" alt="Vanessa MKT" className="w-full" />
         </div>
@@ -48,7 +38,7 @@ export function AppShell() {
               to={to}
               className={({ isActive }) =>
                 `flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive ? 'bg-brand-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700'
+                  isActive ? 'bg-brand-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'
                 }`
               }
             >
@@ -57,28 +47,24 @@ export function AppShell() {
             </NavLink>
           ))}
         </nav>
-        <div className="border-t border-slate-200 p-4 dark:border-slate-700">
-          <div className="flex items-center justify-between">
-            <p className="truncate text-sm font-medium text-slate-700 dark:text-slate-200">{user?.name}</p>
-            <ThemeToggle className="text-slate-400 hover:text-brand-700 dark:text-slate-400 dark:hover:text-brand-400" />
-          </div>
-          <button onClick={logout} className="mt-1 flex items-center gap-1 text-xs text-slate-500 hover:text-brand-700 dark:text-slate-400 dark:hover:text-brand-400">
+        <div className="border-t border-slate-200 p-4">
+          <p className="truncate text-sm font-medium text-slate-700">{user?.name}</p>
+          <button onClick={logout} className="mt-1 flex items-center gap-1 text-xs text-slate-500 hover:text-brand-700">
             <LogOut size={13} /> Sair
           </button>
         </div>
       </aside>
 
-      <header className="sticky top-0 z-10 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] dark:border-slate-700 dark:bg-slate-800 md:hidden">
+      <header className="sticky top-0 z-10 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:hidden">
         <div className="flex items-center gap-2.5">
           <img src="/icons/MKT.png" alt="Vanessa MKT" className="h-9 w-auto" />
           <div>
-            <p className="text-xs text-slate-400 capitalize dark:text-slate-500">{TODAY_LABEL}</p>
-            <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{greeting()}, {user?.name?.split(' ')[0]}</p>
+            <p className="text-xs text-slate-400 capitalize">{TODAY_LABEL}</p>
+            <p className="text-sm font-semibold text-slate-800">{greeting()}, {user?.name?.split(' ')[0]}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <ThemeToggle className="text-slate-500 dark:text-slate-400" />
-          <button onClick={logout} title="Sair" className="text-slate-500 dark:text-slate-400">
+          <button onClick={logout} title="Sair" className="text-slate-500">
             <LogOut size={20} />
           </button>
         </div>
@@ -87,21 +73,21 @@ export function AppShell() {
       <main className="flex-1 overflow-y-auto pb-16 md:pb-0">
         <div className="mx-auto max-w-6xl p-4 md:p-6">
           <div className="mb-5 hidden md:block">
-            <p className="text-sm text-slate-400 capitalize dark:text-slate-500">{TODAY_LABEL}</p>
-            <h1 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">{greeting()}, {user?.name?.split(' ')[0]} 👋</h1>
+            <p className="text-sm text-slate-400 capitalize">{TODAY_LABEL}</p>
+            <h1 className="text-2xl font-semibold text-slate-800">{greeting()}, {user?.name?.split(' ')[0]} 👋</h1>
           </div>
           <Outlet />
         </div>
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-10 flex border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-slate-700 dark:bg-slate-800 md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-10 flex border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] md:hidden">
         {navItems.map(({ to, label, Icon }) => (
           <NavLink
             key={to}
             to={to}
             className={({ isActive }) =>
               `flex flex-1 flex-col items-center gap-0.5 px-0.5 py-2 text-[10px] ${
-                isActive ? 'text-brand-700 font-semibold dark:text-brand-400' : 'text-slate-400 dark:text-slate-500'
+                isActive ? 'text-brand-700 font-semibold' : 'text-slate-400'
               }`
             }
           >

@@ -11,13 +11,13 @@ export function KanbanPage() {
   }
 
   if (isLoading || !data) {
-    return <p className="text-sm text-slate-500 dark:text-slate-400">Carregando quadro...</p>;
+    return <p className="text-sm text-slate-500">Carregando quadro...</p>;
   }
 
   return (
     <div>
-      <h1 className="text-lg font-semibold text-slate-700 dark:text-slate-200 md:hidden">Quadro</h1>
-      <p className="mb-4 mt-1 text-sm text-slate-500 dark:text-slate-400">Troque o status direto no card para mover a tarefa entre colunas.</p>
+      <h1 className="text-lg font-semibold text-slate-700 md:hidden">Quadro</h1>
+      <p className="mb-4 mt-1 text-sm text-slate-500">Troque o status direto no card para mover a tarefa entre colunas.</p>
       <KanbanBoard board={data} onStatusChange={(id, status) => updateStatus.mutate({ id, status })} />
     </div>
   );

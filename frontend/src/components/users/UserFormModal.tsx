@@ -55,40 +55,40 @@ export function UserFormModal({ open, user, onClose, onSubmit, saving }: UserFor
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-xl bg-white dark:bg-slate-800 p-5 shadow-xl">
-        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">{user ? 'Editar usuário' : 'Novo usuário'}</h2>
+      <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-xl bg-white p-5 shadow-xl">
+        <h2 className="text-lg font-semibold text-slate-800">{user ? 'Editar usuário' : 'Novo usuário'}</h2>
 
-        <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">Nome</label>
+        <label className="mt-3 block text-sm font-medium text-slate-700">Nome</label>
         <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass(!!errors.name)} />
         <FieldError message={errors.name} />
 
-        <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">Usuário (login)</label>
-        <input type="text" autoCapitalize="none" autoCorrect="off" disabled={!!user} value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} className={`${inputClass(!!errors.username)} disabled:bg-slate-100 disabled:text-slate-400 dark:text-slate-500`} />
+        <label className="mt-3 block text-sm font-medium text-slate-700">Usuário (login)</label>
+        <input type="text" autoCapitalize="none" autoCorrect="off" disabled={!!user} value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} className={`${inputClass(!!errors.username)} disabled:bg-slate-100 disabled:text-slate-400`} />
         <FieldError message={errors.username} />
 
-        <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">E-mail</label>
+        <label className="mt-3 block text-sm font-medium text-slate-700">E-mail</label>
         <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputClass(!!errors.email)} />
         <FieldError message={errors.email} />
 
-        <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">Papel</label>
+        <label className="mt-3 block text-sm font-medium text-slate-700">Papel</label>
         <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value as any })} className={inputClass()}>
           <option value="member">Equipe / Agência</option>
           <option value="admin">Administrador</option>
         </select>
-        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Controla o acesso: administrador gerencia usuários e pode excluir empreendimentos.</p>
+        <p className="mt-1 text-xs text-slate-400">Controla o acesso: administrador gerencia usuários e pode excluir empreendimentos.</p>
 
-        <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">Função na equipe</label>
+        <label className="mt-3 block text-sm font-medium text-slate-700">Função na equipe</label>
         <select value={form.funcao ?? ''} onChange={(e) => setForm({ ...form, funcao: e.target.value || null })} className={inputClass()}>
           <option value="">Não informado</option>
           {Object.entries(USER_FUNCAO_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
         </select>
 
-        <label className="mt-3 block text-sm font-medium text-slate-700 dark:text-slate-200">{user ? 'Nova senha (opcional)' : 'Senha'}</label>
+        <label className="mt-3 block text-sm font-medium text-slate-700">{user ? 'Nova senha (opcional)' : 'Senha'}</label>
         <input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className={inputClass(!!errors.password)} />
         <FieldError message={errors.password} />
 
         <div className="mt-5 flex justify-end gap-2">
-          <button type="button" onClick={onClose} className="rounded-lg px-3 py-1.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Cancelar</button>
+          <button type="button" onClick={onClose} className="rounded-lg px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100">Cancelar</button>
           <button type="submit" disabled={saving} className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700 disabled:opacity-50">
             {saving ? 'Salvando...' : 'Salvar'}
           </button>

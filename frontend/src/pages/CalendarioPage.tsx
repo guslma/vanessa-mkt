@@ -12,7 +12,7 @@ import { Tarefa, TarefaInput } from '../api/tarefas';
 const CHIP_TONE: Record<string, string> = {
   atrasado: 'bg-red-100 text-red-700',
   vencendo: 'bg-amber-100 text-amber-700',
-  normal: 'bg-slate-100 text-slate-600 dark:text-slate-300',
+  normal: 'bg-slate-100 text-slate-600',
 };
 
 export function CalendarioPage() {
@@ -93,19 +93,19 @@ export function CalendarioPage() {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100">{MONTH_LABELS[month]} {year}</h1>
+        <h1 className="text-xl font-semibold text-slate-800">{MONTH_LABELS[month]} {year}</h1>
         <div className="flex items-center gap-1">
-          <button onClick={goToPrevMonth} className="rounded-lg border border-slate-300 p-1.5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/60"><ChevronLeft size={16} /></button>
-          <button onClick={goToToday} className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/60">Hoje</button>
-          <button onClick={goToNextMonth} className="rounded-lg border border-slate-300 p-1.5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/60"><ChevronRight size={16} /></button>
+          <button onClick={goToPrevMonth} className="rounded-lg border border-slate-300 p-1.5 text-slate-600 hover:bg-slate-50"><ChevronLeft size={16} /></button>
+          <button onClick={goToToday} className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50">Hoje</button>
+          <button onClick={goToNextMonth} className="rounded-lg border border-slate-300 p-1.5 text-slate-600 hover:bg-slate-50"><ChevronRight size={16} /></button>
         </div>
       </div>
 
       {isLoading ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">Carregando calendário...</p>
+        <p className="text-sm text-slate-500">Carregando calendário...</p>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-          <div className="grid grid-cols-7 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-center text-xs font-medium text-slate-500 dark:text-slate-400">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div className="grid grid-cols-7 border-b border-slate-200 bg-slate-50 text-center text-xs font-medium text-slate-500">
             {WEEKDAY_LABELS.map((label) => <div key={label} className="py-2">{label}</div>)}
           </div>
           <div className="grid grid-cols-7">
@@ -117,12 +117,12 @@ export function CalendarioPage() {
                 <button
                   key={day.dateKey}
                   onClick={() => openNewForDay(day.dateKey)}
-                  className={`flex min-h-[88px] flex-col items-stretch gap-1 border-b border-r border-slate-100 dark:border-slate-700/60 p-1.5 text-left align-top ${
-                    day.inCurrentMonth ? 'bg-white dark:bg-slate-800' : 'bg-slate-50/50 dark:bg-slate-900/40'
+                  className={`flex min-h-[88px] flex-col items-stretch gap-1 border-b border-r border-slate-100 p-1.5 text-left align-top ${
+                    day.inCurrentMonth ? 'bg-white' : 'bg-slate-50/50'
                   }`}
                 >
                   <span className={`self-start rounded-full px-1.5 text-xs ${
-                    day.isToday ? 'bg-brand-600 font-semibold text-white' : day.inCurrentMonth ? 'text-slate-600 dark:text-slate-300' : 'text-slate-300 dark:text-slate-600'
+                    day.isToday ? 'bg-brand-600 font-semibold text-white' : day.inCurrentMonth ? 'text-slate-600' : 'text-slate-300'
                   }`}>
                     {day.date.getDate()}
                   </span>
@@ -140,7 +140,7 @@ export function CalendarioPage() {
                         </span>
                       );
                     })}
-                    {extra > 0 && <span className="px-1 text-[10px] text-slate-400 dark:text-slate-500">+{extra} mais</span>}
+                    {extra > 0 && <span className="px-1 text-[10px] text-slate-400">+{extra} mais</span>}
                   </div>
                 </button>
               );

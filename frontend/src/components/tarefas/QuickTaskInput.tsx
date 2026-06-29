@@ -40,7 +40,7 @@ export function QuickTaskInput({ empreendimentos, defaultEmpreendimentoId, onCre
       <select
         value={empreendimentoId}
         onChange={(e) => setEmpreendimentoId(e.target.value)}
-        className="w-full shrink-0 rounded-lg border border-slate-300 bg-white px-2 py-2 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 sm:w-40"
+        className="w-full shrink-0 rounded-lg border border-slate-300 bg-white px-2 py-2 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 sm:w-40"
       >
         {empreendimentos.map((emp) => <option key={emp.id} value={emp.id}>{emp.nome}</option>)}
       </select>
@@ -49,7 +49,7 @@ export function QuickTaskInput({ empreendimentos, defaultEmpreendimentoId, onCre
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
           placeholder="Adicionar tarefa rápida e apertar Enter..."
-          className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
+          className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
         />
         <button
           type="submit"

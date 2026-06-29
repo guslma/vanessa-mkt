@@ -23,9 +23,9 @@ export function TarefaAnexos({ tarefaId }: { tarefaId: string }) {
   }
 
   return (
-    <div className="mt-5 border-t border-slate-100 dark:border-slate-700/60 pt-4">
+    <div className="mt-5 border-t border-slate-100 pt-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <div className="flex items-center gap-1.5 text-sm font-medium text-slate-600">
           <Paperclip size={14} /> Anexos
         </div>
         <button
@@ -39,18 +39,18 @@ export function TarefaAnexos({ tarefaId }: { tarefaId: string }) {
         <input ref={fileInputRef} type="file" className="hidden" onChange={handleFileChange} />
       </div>
 
-      {isLoading && <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">Carregando...</p>}
-      {!isLoading && anexos.length === 0 && <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">Nenhum arquivo anexado ainda.</p>}
+      {isLoading && <p className="mt-2 text-xs text-slate-400">Carregando...</p>}
+      {!isLoading && anexos.length === 0 && <p className="mt-2 text-xs text-slate-400">Nenhum arquivo anexado ainda.</p>}
 
       <ul className="mt-2 flex flex-col gap-1.5">
         {anexos.map((anexo) => (
-          <li key={anexo.id} className="flex items-center justify-between rounded-lg border border-slate-100 dark:border-slate-700/60 px-2.5 py-1.5 text-xs">
-            <span className="truncate text-slate-700 dark:text-slate-200">{anexo.nome_original} <span className="text-slate-400 dark:text-slate-500">({formatSize(anexo.tamanho_bytes)})</span></span>
+          <li key={anexo.id} className="flex items-center justify-between rounded-lg border border-slate-100 px-2.5 py-1.5 text-xs">
+            <span className="truncate text-slate-700">{anexo.nome_original} <span className="text-slate-400">({formatSize(anexo.tamanho_bytes)})</span></span>
             <span className="flex items-center gap-2 shrink-0">
-              <button type="button" onClick={() => download.mutate(anexo)} className="text-slate-400 dark:text-slate-500 hover:text-brand-700">
+              <button type="button" onClick={() => download.mutate(anexo)} className="text-slate-400 hover:text-brand-700">
                 <Download size={14} />
               </button>
-              <button type="button" onClick={() => remove.mutate(anexo.id)} className="text-slate-400 dark:text-slate-500 hover:text-red-600">
+              <button type="button" onClick={() => remove.mutate(anexo.id)} className="text-slate-400 hover:text-red-600">
                 <Trash2 size={14} />
               </button>
             </span>

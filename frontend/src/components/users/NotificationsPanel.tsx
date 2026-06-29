@@ -50,13 +50,13 @@ export function NotificationsPanel() {
   if (!isPushSupported()) {
     const showIosInstructions = isIos() && !isStandalone();
     return (
-      <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
+      <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-4">
         <div className="flex items-center gap-2">
           <BellOff size={16} className="text-slate-400" />
-          <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200">Resumo diário por notificação</h2>
+          <h2 className="text-sm font-semibold text-slate-700">Resumo diário por notificação</h2>
         </div>
         {showIosInstructions ? (
-          <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-1 text-xs text-slate-500">
             <p>No iPhone, notificações só funcionam se o app for adicionado à Tela de Início (precisa do iOS 16.4 ou mais recente). Para ativar:</p>
             <ol className="mt-1.5 list-decimal space-y-0.5 pl-4">
               <li>Toque no ícone de compartilhar do Safari (quadrado com seta para cima)</li>
@@ -65,19 +65,19 @@ export function NotificationsPanel() {
             </ol>
           </div>
         ) : (
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Este navegador não suporta notificações push.</p>
+          <p className="mt-1 text-xs text-slate-500">Este navegador não suporta notificações push.</p>
         )}
       </div>
     );
   }
 
   return (
-    <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
+    <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-4">
       <div className="flex items-center gap-2">
         <Bell size={16} className="text-brand-600" />
-        <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200">Resumo diário por notificação</h2>
+        <h2 className="text-sm font-semibold text-slate-700">Resumo diário por notificação</h2>
       </div>
-      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-xs text-slate-500">
         {data?.configured
           ? 'Ative as notificações para receber um resumo diário das tarefas neste dispositivo.'
           : 'Push não configurado no servidor ainda. Defina as variáveis VAPID_* no .env para ativar.'}
@@ -87,7 +87,7 @@ export function NotificationsPanel() {
           <button
             onClick={() => (subscribed ? unsubscribe.mutate() : subscribe.mutate())}
             disabled={subscribe.isPending || unsubscribe.isPending}
-            className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700/60"
+            className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50"
           >
             {subscribed ? <BellOff size={12} /> : <Bell size={12} />}
             {subscribed ? 'Desativar neste dispositivo' : 'Ativar neste dispositivo'}
@@ -96,7 +96,7 @@ export function NotificationsPanel() {
             <button
               onClick={() => send.mutate()}
               disabled={send.isPending}
-              className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700/60"
+              className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50"
             >
               <Send size={12} /> {send.isPending ? 'Enviando...' : 'Enviar agora (teste)'}
             </button>

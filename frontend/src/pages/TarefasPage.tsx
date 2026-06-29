@@ -70,11 +70,11 @@ export function TarefasPage() {
     <div>
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Tarefas</h1>
+          <h1 className="text-xl font-semibold text-slate-800">Tarefas</h1>
           {filteredEmpreendimento && (
-            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-slate-500">
               Filtrando por <span className="font-medium text-brand-700">{filteredEmpreendimento.nome}</span>
-              <button onClick={() => setFilters({ ...filters, empreendimento_id: undefined })} className="text-xs text-slate-400 dark:text-slate-500 underline hover:text-slate-600 dark:hover:text-slate-300">
+              <button onClick={() => setFilters({ ...filters, empreendimento_id: undefined })} className="text-xs text-slate-400 underline hover:text-slate-600">
                 limpar
               </button>
             </p>
@@ -98,7 +98,7 @@ export function TarefasPage() {
       {isError ? (
         <QueryError error={error} onRetry={refetch} />
       ) : isLoading ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">Carregando tarefas...</p>
+        <p className="text-sm text-slate-500">Carregando tarefas...</p>
       ) : (
         <TarefasTable tarefas={tarefas} onEdit={handleEdit} onDuplicate={handleDuplicate} onDelete={setDeleting} />
       )}

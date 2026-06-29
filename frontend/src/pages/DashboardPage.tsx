@@ -12,12 +12,12 @@ export function DashboardPage() {
   }
 
   if (isLoading || !data) {
-    return <p className="text-sm text-slate-500 dark:text-slate-400">Carregando resumo...</p>;
+    return <p className="text-sm text-slate-500">Carregando resumo...</p>;
   }
 
   return (
     <div>
-      <h1 className="text-lg font-semibold text-slate-700 dark:text-slate-200 md:hidden">Painel de Marketing</h1>
+      <h1 className="text-lg font-semibold text-slate-700 md:hidden">Painel de Marketing</h1>
       <div className="mt-3 grid grid-cols-2 gap-3 md:mt-0 md:grid-cols-4">
         <SummaryCard label="Total de Tarefas" value={data.total_tarefas} Icon={ListTodo} tone="brand" />
         <SummaryCard label="Em Andamento" value={data.em_andamento} Icon={Clock} />
