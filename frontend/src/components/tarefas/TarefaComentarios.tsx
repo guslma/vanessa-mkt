@@ -54,7 +54,7 @@ export function TarefaComentarios({ tarefaId }: { tarefaId: string }) {
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
           placeholder="Escrever um comentário..."
-          className="flex-1 rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+          className="flex-1 rounded-lg border border-slate-300 px-3 py-1.5 text-base md:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
         />
         <button
           type="submit"

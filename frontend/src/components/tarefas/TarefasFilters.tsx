@@ -19,21 +19,21 @@ export function TarefasFiltersBar({ filters, onChange, empreendimentos }: Tarefa
         placeholder="Buscar..."
         value={filters.search ?? ''}
         onChange={(e) => set('search', e.target.value)}
-        className="col-span-2 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 md:col-span-1"
+        className="col-span-2 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-base text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 md:col-span-1 md:text-sm"
       />
-      <select value={filters.empreendimento_id ?? ''} onChange={(e) => set('empreendimento_id', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
+      <select value={filters.empreendimento_id ?? ''} onChange={(e) => set('empreendimento_id', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
         <option value="">Empreendimento</option>
         {empreendimentos.map((e) => <option key={e.id} value={e.id}>{e.nome}</option>)}
       </select>
-      <select value={filters.categoria ?? ''} onChange={(e) => set('categoria', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
+      <select value={filters.categoria ?? ''} onChange={(e) => set('categoria', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
         <option value="">Categoria</option>
         {Object.entries(TAREFA_CATEGORIA_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
       </select>
-      <select value={filters.status ?? ''} onChange={(e) => set('status', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
+      <select value={filters.status ?? ''} onChange={(e) => set('status', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
         <option value="">Status</option>
         {Object.entries(TAREFA_STATUS_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
       </select>
-      <select value={filters.prioridade ?? ''} onChange={(e) => set('prioridade', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
+      <select value={filters.prioridade ?? ''} onChange={(e) => set('prioridade', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-base md:text-sm text-slate-800 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
         <option value="">Prioridade</option>
         {Object.entries(TAREFA_PRIORIDADE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
       </select>

@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Bell, BellOff, Send } from 'lucide-react';
 import { getNotificationsStatus, sendDigestNow, subscribePush, unsubscribePush } from '../../api/notifications';
-import { getCurrentPushSubscription, isPushSupported, subscribeToPush, subscriptionToPayload } from '../../lib/push';
+import { getCurrentPushSubscription, isIos, isPushSupported, isStandalone, subscribeToPush, subscriptionToPayload } from '../../lib/push';
 import { errorMessage } from '../../lib/errorMessage';
 
 export function NotificationsPanel() {
@@ -48,13 +48,25 @@ export function NotificationsPanel() {
   });
 
   if (!isPushSupported()) {
+    const showIosInstructions = isIos() && !isStandalone();
     return (
       <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
         <div className="flex items-center gap-2">
           <BellOff size={16} className="text-slate-400" />
           <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200">Resumo diário por notificação</h2>
         </div>
-        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Este navegador não suporta notificações push.</p>
+        {showIosInstructions ? (
+          <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            <p>No iPhone, notificações só funcionam se o app for adicionado à Tela de Início (precisa do iOS 16.4 ou mais recente). Para ativar:</p>
+            <ol className="mt-1.5 list-decimal space-y-0.5 pl-4">
+              <li>Toque no ícone de compartilhar do Safari (quadrado com seta para cima)</li>
+              <li>Escolha &quot;Adicionar à Tela de Início&quot;</li>
+              <li>Abra o app pelo ícone criado na tela inicial (não pelo Safari) e ative as notificações aqui</li>
+            </ol>
+          </div>
+        ) : (
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Este navegador não suporta notificações push.</p>
+        )}
       </div>
     );
   }

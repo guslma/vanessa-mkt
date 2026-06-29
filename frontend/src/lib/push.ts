@@ -9,6 +9,16 @@ export function isPushSupported() {
   return 'serviceWorker' in navigator && 'PushManager' in window;
 }
 
+export function isIos() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+
+// No iOS, o Web Push só existe quando o app foi adicionado à Tela de Início
+// (iOS 16.4+) e aberto a partir do ícone — numa aba normal do Safari, `PushManager` nem existe.
+export function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches || (navigator as any).standalone === true;
+}
+
 export async function getCurrentPushSubscription(): Promise<PushSubscription | null> {
   if (!isPushSupported()) return null;
   const registration = await navigator.serviceWorker.ready;

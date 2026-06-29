@@ -36,7 +36,7 @@ export function AppShell() {
   const navItems = user?.role === 'admin' ? [...NAV_ITEMS, { to: '/usuarios', label: 'Usuários', Icon: Users }] : NAV_ITEMS;
 
   return (
-    <div className="flex h-screen flex-col bg-slate-50 dark:bg-slate-900 md:flex-row">
+    <div className="flex h-dvh flex-col overflow-hidden bg-slate-50 dark:bg-slate-900 md:flex-row">
       <aside className="hidden md:flex md:w-60 md:flex-col md:border-r md:border-slate-200 md:bg-white dark:md:border-slate-700 dark:md:bg-slate-800">
         <div className="flex items-center justify-center px-3 py-4">
           <img src="/icons/MKT.png" alt="Vanessa MKT" className="w-full" />
@@ -68,7 +68,7 @@ export function AppShell() {
         </div>
       </aside>
 
-      <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800 md:hidden">
+      <header className="sticky top-0 z-10 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800 md:hidden">
         <div className="flex items-center gap-2.5">
           <img src="/icons/MKT.png" alt="Vanessa MKT" className="h-9 w-auto" />
           <div>

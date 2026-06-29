@@ -42,7 +42,7 @@ export function KanbanCard({ card, onStatusChange }: KanbanCardProps) {
       <select
         value={card.status}
         onChange={(e) => onStatusChange(card.id, e.target.value)}
-        className="mt-2.5 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
+        className="mt-2.5 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2 py-1.5 text-base md:text-xs font-medium text-slate-600 dark:text-slate-300 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
       >
         {Object.entries(TAREFA_STATUS_LABELS).map(([value, label]) => (
           <option key={value} value={value}>{label}</option>
